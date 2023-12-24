@@ -1,0 +1,90 @@
+﻿.Tbl-Outer
+{
+    width:100%;
+    border:2px solid;
+}
+.Lbl-Msg
+{
+    color:black;
+    font-weight:bold;
+    font-family:'Times New Roman';
+}
+.Lbl-Inst
+{
+    font-family:'Times New Roman';
+    color:teal;
+    font-weight:bold;
+}
+.Btn
+{
+    background-color:yellow;
+    color:green;
+    font-weight:bold;
+    height:30px;
+}
+.Lbl-Error
+{
+    color:blue;
+    font-weight:bold;
+}
+.LblDtTime
+{
+    color:lime;
+    font-weight:bold;
+}
+.DtTime
+{
+    color:yellow;
+    font-weight:bold;
+}
+tr
+{
+    width:100%;
+}
+#Hdr
+{
+    background-color:black;
+    width:100%;
+}
+#Title
+{
+    font-family:'Brush Script Std';
+    color:yellow;
+    font-size:45px;
+    text-shadow:3px 2px 1px red;
+}
+#HeadLine
+{
+    color:springgreen;
+    font-family:'Times New Roman';
+    font-weight:bold;
+}
+.LblUsr
+{
+    color:mediumspringgreen;
+    font-weight:bold;
+    font-size:large;
+    width:100%;
+}
+#Ftr
+{
+    background-color:black;
+    color:yellow;
+    font-weight:bold;
+    font-family:'Times New Roman';
+}
+#Ftr a
+{
+    color:yellow;
+    text-align:right;
+}
+#Ftr a i
+{
+    font-size:x-large;
+}
+p strong
+{
+    font-family:Andalus;
+    color:red;
+}
+

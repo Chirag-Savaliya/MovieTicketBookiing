@@ -1,0 +1,84 @@
+ void LoadShow(DropDownList d)
+    {
+        d.Items.Clear();
+        d.Items.Add("-- Select Show --");
+        cn = new SqlConnection(Connection.cnstr);
+        cn.Open();
+        cmd = new SqlCommand("SELECT shoName,shoStrtTime FROM tblShowMaster WHERE shoName IN(SELECT shoName FROM tblTicketRateMaster WHERE mvId=" + lblMvNmTcktBook.ToolTip.ToString() + " AND tcktIsAct='TRUE') AND shoIsAct='TRUE'", cn);
+        ds=new DataSet();
+        da = new SqlDataAdapter(cmd);
+        da.Fill(ds);
+        cn.Close();
+        string[] arrShTim;
+        string[] arrCrTim;
+        int ShTimStHr,ShTimStMnts,ShTimEdndHr,ShTimEndMnts,CrHr, CrMnt;
+        string ShTimStrtFrmnt,ShTimEndFrmt,CrFrmt;
+        String[] arrSetTcktBkDt = txtdtTcktBook.Text.ToString().Split('/');
+        DateTime dt = new DateTime(int.Parse(arrSetTcktBkDt[2]), int.Parse(arrSetTcktBkDt[0]), int.Parse(arrSetTcktBkDt[1]));
+        int maxStrtHrAM=0;
+        int maxStrtHrPM = 0;
+        for(int x=0; x<ds.Tables[0].Rows.Count; x++)
+        {
+            arrShTim = ds.Tables[0].Rows[x][1].ToString().Split('-');
+            arrCrTim=System.DateTime.Now.ToShortTimeString().Split(':');
+            CrHr=int.Parse(arrCrTim[0]);
+            CrMnt=int.Parse(arrCrTim[1].Substring(0,2));
+            ShTimStHr = int.Parse(arrShTim[0].Substring(0,2));
+            ShTimStMnts = int.Parse(arrShTim[0].Substring(3, 2));
+            ShTimEdndHr = int.Parse(arrShTim[1].Substring(0, 2));
+            ShTimEndMnts = int.Parse(arrShTim[1].Substring(3, 2));
+            ShTimStrtFrmnt = arrShTim[0].Substring(6,2);
+            ShTimEndFrmt = arrShTim[1].Substring(6, 2);
+            if (ShTimStrtFrmnt=="AM" && ShTimStHr< 12 && ShTimStHr > maxStrtHrAM)
+            {
+                maxStrtHrAM = ShTimStHr;
+            }
+            else if (ShTimStrtFrmnt == "PM" && ShTimStHr < 12 && ShTimStHr > maxStrtHrPM)
+            {
+                maxStrtHrPM = ShTimStHr;
+            }
+
+            if(System.DateTime.Now.ToShortTimeString().Contains("AM"))
+            {
+                CrFrmt="AM";
+            }
+            else
+            {
+                CrFrmt = "PM";
+            }
+            if (System.DateTime.Today.CompareTo(dt) == -1)
+            {
+                d.Items.Add(ds.Tables[0].Rows[x][0].ToString());
+            }
+            else if (System.DateTime.Today.CompareTo(dt)==0)
+            {
+                if(ShTimStMnts==0)
+                {
+                        if (CrFrmt == "AM")
+                        {
+                            if ((CrHr == 12) || (CrHr <= (maxStrtHrAM - 1) && CrMnt < 60))
+                                d.Items.Add(ds.Tables[0].Rows[x][0].ToString());
+                        }
+                        else
+                        {
+                            if ((CrHr == 12 || (CrHr <= (maxStrtHrPM - 1) && CrMnt < 60)) && ShTimStrtFrmnt == "PM")
+                                d.Items.Add(ds.Tables[0].Rows[x][0].ToString());
+                        }
+                }
+                else
+                {
+                    if (CrFrmt == "AM")
+                    {
+                        if ((CrHr == 12) || (CrHr <= maxStrtHrAM && CrMnt < ShTimStMnts))
+                            d.Items.Add(ds.Tables[0].Rows[x][0].ToString());
+                    }
+                    else
+                    {
+                        if ((CrHr == 12 || (CrHr <= maxStrtHrPM && CrMnt < ShTimStMnts)) && ShTimStrtFrmnt == "PM")
+                            d.Items.Add(ds.Tables[0].Rows[x][0].ToString());
+                    }
+                }
+            }
+            //Response.Write("<script>alert('"++"')</script>");
+        }
+    }

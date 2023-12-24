@@ -1,0 +1,143 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MovieTickeBooking.master.cs" Inherits="MovieTickeBooking" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="Fonts/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<link href="CSS/Style.css" rel="stylesheet" />
+<script type="text/javascript" src="JS/Script.js"></script>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <center>
+        <table id="Hdr" border="0">
+            <tr>
+                <td width="5%" align="center" valign="middle">
+                    <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/logo.png" Width="100%" Height="60" />
+                </td>
+                <td valign="top" align="center" width="50%">
+                    <h1 id="Title">Super Cinema</h1>
+                    <marquee id="HeadLine" scrollamount="2.5">Enjoy Your Life By Booking Movie Ticket For Any Kinds Of Movie From Any Where And Any Time.</marquee>
+                </td>
+                <td width="25%">
+                    <table>
+                        <tr>
+                            <td>
+                                <asp:Image ID="icnCal" runat="server" ImageUrl="~/Images/cal.png" Height="60" Width="100" />
+                            </td>
+                            <td>
+                                <asp:Label ID="Date" runat="server" CssClass="DtTime"></asp:Label>  
+                            </td>
+                        </tr>
+                    </table>
+                    <%--<asp:Label ID="lblDate" runat="server" Text="DATE:" CssClass="LblDtTime"></asp:Label>--%>
+                </td>
+                <td width="20%">
+                    <table>
+                        <tr>
+                            <td>
+                                <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/clock1.jpg" Height="60" Width="100" />
+                            </td>
+                            <td>
+                                  <asp:UpdatePanel ID="tipmeUpdt" runat="server">
+                                    <Triggers>
+                                     <asp:AsyncPostBackTrigger ControlID="timrDate" EventName="Tick" />
+                                   </Triggers>
+                                   <ContentTemplate>
+                                       <asp:Label ID="Timer" runat="server" CssClass="DtTime"></asp:Label>
+                                  </ContentTemplate>
+                               </asp:UpdatePanel>
+                          </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td valign="middle" align="center" colspan="3">
+                    <asp:Menu ID="mnu" runat="server" BackColor="Black" BorderColor="#CC3300" DynamicHorizontalOffset="2" DynamicVerticalOffset="1" Font-Bold="True" Font-Italic="False" Font-Names="Times New Roman" Font-Size="1em" ForeColor="Aqua" Orientation="Horizontal" StaticSubMenuIndent="10px" Width="100%" OnMenuItemClick="mnu_MenuItemClick">
+                        <DynamicHoverStyle BackColor="Yellow" ForeColor="Red" />
+                        <DynamicMenuItemStyle BackColor="Black" ForeColor="Aqua" VerticalPadding="10px" />
+                        <DynamicMenuStyle BackColor="Black" VerticalPadding="5px" />
+                        <DynamicSelectedStyle BackColor="Aqua" ForeColor="Black" />
+                        <Items>
+                            <asp:MenuItem Text="HOME" Value="HOME" NavigateUrl="Home.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="BOOKING" Value="BOOKING" NavigateUrl="TcktBooking.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="MANAGEMENT" Value="MANAGEMENT">
+                                <asp:MenuItem Text="BANNERS" Value="BANNERS" NavigateUrl="BnnrsMngmnt.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="MOVIES" Value="MOVIES" NavigateUrl="MovieMngmnt.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="USERS" Value="USERS" NavigateUrl="UsersMngmnt.aspx"></asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="ShowMngmnt.aspx" Text="SHOWS" Value="SHOWS"></asp:MenuItem>
+                                <asp:MenuItem NavigateUrl="TcktMngmnt.aspx" Text="TICKET RATE" Value="TICKET RATE"></asp:MenuItem>
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="ABOUTUS" Value="ABOUTUS" NavigateUrl="AboutUs.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="CONTACTUS" Value="CONTACTUS" NavigateUrl="ContactUs.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="ACCOUNT" Value="ACCOUNT">
+                                <asp:MenuItem Text="SIGNIN" Value="SIGNIN" NavigateUrl="Signin.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="SIGNUP" Value="SIGNUP" NavigateUrl="Signup.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="SIGNOUT" Value="SIGNOUT"></asp:MenuItem>
+                                <asp:MenuItem Text="MY PROFILE" Value="MY PROFILE" NavigateUrl="prflMngmnt.aspx"></asp:MenuItem>
+                            </asp:MenuItem>
+                        </Items>
+                        <StaticHoverStyle BackColor="Yellow" ForeColor="Red" />
+                        <StaticMenuItemStyle HorizontalPadding="10px" />
+                        <StaticSelectedStyle BackColor="Aqua" ForeColor="Black" HorizontalPadding="10px" ItemSpacing="10px" />
+                    </asp:Menu>
+                </td>
+                <td align="center">
+                    <asp:Label ID="lblUser" runat="server" CssClass="LblUsr"></asp:Label>
+                </td>
+            </tr>
+        </table>
+        <table border="0" class="Tbl-Outer">
+            <tr>
+                <td colspan="2">
+                    <asp:UpdatePanel ID="bnrUpdt" runat="server">
+                      <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="timrImg" EventName="Tick" />
+                      </Triggers>
+                      <ContentTemplate>
+                        <asp:Image ID="imgBnr" runat="server" ImageUrl="~/Lighthouse.jpg" Width="100%" Height="400"></asp:Image>
+                       </ContentTemplate>
+                    </asp:UpdatePanel> 
+                </td>
+            </tr>
+            <tr width="100%">
+                <td width="100%" align="center">
+                     <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </td>
+            </tr>
+        </table>
+        <table id="Ftr" width="100%" border="0">
+            <tr>
+                <td align="center">
+                    <table cellspacing="15">
+                            <tr>
+                                <td>
+                                     <asp:Image ID="Image2" runat="server" ImageUrl="~/Images/fb.png" Height="40" Width="40" />
+                                </td>
+                                <td>
+                                    <asp:Image ID="Image3" runat="server" ImageUrl="~/Images/ig.jpg" Height="40" Width="40" />
+                                </td>
+                                <td>
+                                   <asp:Image ID="Image4" runat="server" ImageUrl="~/Images/wap.jpg" Height="40" Width="40" />
+                                </td>
+                             </tr>
+                            </table>
+                    </td>  
+            </tr>
+            <tr>
+                <td align="center">
+                    @copyright Super Cinema 
+                </td>
+            </tr>
+        </table>
+    </center>
+        <asp:Timer ID="timrDate" runat="server" OnTick="Timer_Tick" Interval="1000"></asp:Timer>
+        <asp:Timer ID="timrImg" runat="server" Interval="10000" OnTick="timrImg_Tick"></asp:Timer>
+    </form>
+</body>
+</html>
